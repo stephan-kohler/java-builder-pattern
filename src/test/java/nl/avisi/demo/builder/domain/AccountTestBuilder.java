@@ -1,7 +1,8 @@
 package nl.avisi.demo.builder.domain;
 
 import nl.avisi.demo.builder.AbstractParentTestBuilder;
-import nl.avisi.demo.builder.ParentTestBuilder;
+
+import java.util.List;
 
 public abstract class AccountTestBuilder<B extends AccountTestBuilder<B, T>, T extends Account> extends AbstractParentTestBuilder<B, T> {
 
@@ -9,7 +10,8 @@ public abstract class AccountTestBuilder<B extends AccountTestBuilder<B, T>, T e
 
     protected AccountTestBuilder(Account.AbstractBuilder builder) {
         this.builder = builder
-                .withAccountNumber("A001");
+                .withAccountNumber("A001")
+                .withDeposits(List.of(DepositTestBuilder.builder().build()));
     }
 
     public B withAccountNumber(String accountNumber) {
