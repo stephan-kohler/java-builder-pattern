@@ -18,11 +18,7 @@ import java.util.Objects;
 
 public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher<TestBuilder<?>> {
 
-    private ObjectMapper objectMapper;
-
-    public InstanceIsJsonSerializableMatcher(ObjectMapper objectMapper) {
-        this.objectMapper = Objects.requireNonNull(objectMapper,"objectMapper");
-    }
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected boolean matchesSafely(TestBuilder<?> source) {
