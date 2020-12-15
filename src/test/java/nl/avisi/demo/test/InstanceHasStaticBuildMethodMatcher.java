@@ -7,7 +7,7 @@ import org.hamcrest.TypeSafeMatcher;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public class TestBuilderBuildsInstanceWithStaticBuildMethod extends TypeSafeMatcher<TestBuilder<?>> {
+public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher<TestBuilder<?>> {
 
     @Override
     protected boolean matchesSafely(TestBuilder<?> source) {

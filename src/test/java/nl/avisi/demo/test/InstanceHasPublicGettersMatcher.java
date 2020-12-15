@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TestBuilderBuildsInstanceWithPublicGettersMatcher extends TypeSafeMatcher<TestBuilder<?>> {
+public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher<TestBuilder<?>> {
 
     @Override
     protected boolean matchesSafely(TestBuilder<?> source) {

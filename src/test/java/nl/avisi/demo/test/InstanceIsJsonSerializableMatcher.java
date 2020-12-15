@@ -16,11 +16,11 @@ import java.io.StringWriter;
 import java.util.Objects;
 
 
-public class TestBuilderBuildsJSonSerializableInstanceMatcher extends TypeSafeMatcher<TestBuilder<?>> {
+public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher<TestBuilder<?>> {
 
     private ObjectMapper objectMapper;
 
-    public TestBuilderBuildsJSonSerializableInstanceMatcher(ObjectMapper objectMapper) {
+    public InstanceIsJsonSerializableMatcher(ObjectMapper objectMapper) {
         this.objectMapper = Objects.requireNonNull(objectMapper,"objectMapper");
     }
 
