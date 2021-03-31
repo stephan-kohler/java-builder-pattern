@@ -13,8 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Objects;
-
 
 public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher<TestBuilder<?>> {
 

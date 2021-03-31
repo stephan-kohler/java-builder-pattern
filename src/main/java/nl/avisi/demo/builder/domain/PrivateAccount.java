@@ -9,6 +9,9 @@ public class PrivateAccount extends Account implements CloneBuilder<PrivateAccou
     private String firstName;
     private String lastName;
 
+    private PrivateAccount() {
+    }
+
     private PrivateAccount(Builder builder) {
         super(builder);
         this.firstName = builder.firstName;

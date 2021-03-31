@@ -14,6 +14,9 @@ public abstract class Account implements ParentCloneBuilder<Account.AbstractBuil
 
     private List<Deposit> deposits;
 
+    protected Account() {
+    }
+
     protected Account(AbstractBuilder builder) {
         this.accountNumber = Objects.requireNonNull(builder.accountNumber, "accountNumber cannot be null");
         this.deposits = builder.deposits;

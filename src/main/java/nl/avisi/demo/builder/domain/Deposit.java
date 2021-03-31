@@ -8,6 +8,9 @@ public class Deposit implements CloneBuilder<Deposit.Builder> {
 
     private Integer amount;
 
+    private Deposit() {
+    }
+
     private Deposit(Builder builder) {
         this.amount = Objects.requireNonNull(builder.amount, "amount cannot be null");
     }

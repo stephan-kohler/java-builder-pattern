@@ -5,7 +5,7 @@ import nl.avisi.demo.builder.domain.DepositTestBuilder;
 import nl.avisi.demo.builder.domain.PrivateAccountTestBuilder;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package nl.avisi.demo;
 
 import nl.avisi.demo.builder.domain.PrivateAccount;
 import nl.avisi.demo.builder.domain.PrivateAccountTestBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestUsage {
 
