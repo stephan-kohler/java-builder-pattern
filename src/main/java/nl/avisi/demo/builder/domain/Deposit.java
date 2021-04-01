@@ -1,49 +1,50 @@
 package nl.avisi.demo.builder.domain;
 
-import nl.avisi.demo.builder.CloneBuilder;
-
 import java.util.Objects;
 
-public class Deposit implements CloneBuilder<Deposit.Builder> {
+public class Deposit {
 
     private Integer amount;
 
     private Deposit() {
     }
 
-    private Deposit(Builder builder) {
-        this.amount = Objects.requireNonNull(builder.amount, "amount cannot be null");
+    private Deposit(Deposit source) {
+        this.amount = Objects.requireNonNull(source.amount, "amount cannot be null");
     }
 
     public Integer getAmount() {
         return amount;
     }
 
-    @Override
+    private void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
     public Builder cloneBuilder() {
         return builder()
                 .withAmount(getAmount());
     }
 
     public static Builder builder() {
-        return new Builder();
+        return new Builder(new Deposit());
     }
 
-    public static class Builder implements nl.avisi.demo.builder.Builder<Deposit> {
+    public static class Builder {
 
-        private Integer amount;
+        private final Deposit deposit;
 
-        private Builder() {
+        private Builder(Deposit source) {
+            deposit = source;
         }
 
         public Builder withAmount(Integer amount) {
-            this.amount = amount;
+            deposit.setAmount(amount);
             return this;
         }
 
-        @Override
         public Deposit build() {
-            return new Deposit(this);
+            return new Deposit(deposit);
         }
     }
 }

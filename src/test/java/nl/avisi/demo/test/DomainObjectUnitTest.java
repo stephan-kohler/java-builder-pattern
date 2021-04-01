@@ -1,10 +1,10 @@
 package nl.avisi.demo.test;
 
-import nl.avisi.demo.builder.TestBuilder;
 import nl.avisi.demo.builder.domain.DepositTestBuilder;
 import nl.avisi.demo.builder.domain.PrivateAccountTestBuilder;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,15 +13,15 @@ public class DomainObjectUnitTest {
 
     @Test
     public void testDomainObjects() {
-        List<Matcher<TestBuilder<?>>> matchers = List.of(
+        List<Matcher<Object>> matchers = List.of(
                 new InstanceHasPublicGettersMatcher(),
                 new InstanceHasStaticBuildMethodMatcher(),
                 new InstanceIsJsonSerializableMatcher());
 
-        List<TestBuilder<?>> testBuilders = List.of(
-                DepositTestBuilder.builder(),
-                PrivateAccountTestBuilder.builder());
+        List<?> testObjects = List.of(
+                DepositTestBuilder.builder().build(),
+                PrivateAccountTestBuilder.builder().build());
 
-        testBuilders.forEach(builder -> matchers.forEach(((matcher) -> MatcherAssert.assertThat(builder, matcher))));
+        testObjects.forEach(builder -> matchers.forEach(((matcher) -> MatcherAssert.assertThat(builder, matcher))));
     }
 }

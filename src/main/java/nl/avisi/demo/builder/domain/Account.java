@@ -1,14 +1,10 @@
 package nl.avisi.demo.builder.domain;
 
-import nl.avisi.demo.builder.ParentBuilder;
-import nl.avisi.demo.builder.ParentCloneBuilder;
-
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public abstract class Account implements ParentCloneBuilder<Account.AbstractBuilder<? extends Account.AbstractBuilder<?, ?>, ?>> {
+public abstract class Account {
 
     private String accountNumber;
 
@@ -17,40 +13,49 @@ public abstract class Account implements ParentCloneBuilder<Account.AbstractBuil
     protected Account() {
     }
 
-    protected Account(AbstractBuilder builder) {
-        this.accountNumber = Objects.requireNonNull(builder.accountNumber, "accountNumber cannot be null");
-        this.deposits = builder.deposits;
+    protected Account(Account account) {
+        Objects.requireNonNull(account, "account cannot be null");
+        this.accountNumber = Objects.requireNonNull(account.accountNumber, "accountNumber cannot be null");
+        this.deposits = account.deposits;
     }
 
     public String getAccountNumber() {
         return accountNumber;
     }
 
+    private void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
     public List<Deposit> getDeposits() {
         return deposits;
     }
 
-    @Override
-    public AbstractBuilder<?, ?> cloneBuilder(AbstractBuilder<?, ?> builder) {
-        return builder
-                .withAccountNumber(getAccountNumber())
+    private void setDeposits(List<Deposit> deposits) {
+        this.deposits = deposits;
+    }
+
+    protected Builder cloneBuilder(Account source) {
+        return new Builder(source)
+                // Make a deep clone of the deposits
                 .withDeposits(getDeposits().stream().map(deposit -> deposit.cloneBuilder().build()).collect(Collectors.toList()));
     }
 
-    public static abstract class AbstractBuilder<B extends AbstractBuilder<B, T>, T extends Account> implements ParentBuilder<B, T> {
+    public static class Builder {
+        private final Account account;
 
-        private String accountNumber;
-
-        private List<Deposit> deposits;
-
-        public B withAccountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
-            return self();
+        protected Builder(Account account) {
+            this.account = account;
         }
 
-        public B withDeposits(List<Deposit> deposits) {
-            this.deposits = deposits;
-            return self();
+        public Builder withAccountNumber(String accountNumber) {
+            account.setAccountNumber(accountNumber);
+            return this;
+        }
+
+        public Builder withDeposits(List<Deposit> deposits) {
+            account.setDeposits(deposits);
+            return this;
         }
     }
 

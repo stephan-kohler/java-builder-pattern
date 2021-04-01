@@ -1,10 +1,9 @@
 package nl.avisi.demo.builder.domain;
 
-import nl.avisi.demo.builder.CloneBuilder;
-
 import java.util.Objects;
+import java.util.function.Consumer;
 
-public class PrivateAccount extends Account implements CloneBuilder<PrivateAccount.Builder> {
+public class PrivateAccount extends Account {
 
     private String firstName;
     private String lastName;
@@ -12,59 +11,68 @@ public class PrivateAccount extends Account implements CloneBuilder<PrivateAccou
     private PrivateAccount() {
     }
 
-    private PrivateAccount(Builder builder) {
-        super(builder);
-        this.firstName = builder.firstName;
-        this.lastName = Objects.requireNonNull(builder.lastName, "lastName cannot be null");
+    public PrivateAccount(PrivateAccount source) {
+        super(source);
+        this.firstName = source.firstName;
+        this.lastName = Objects.requireNonNull(source.lastName, "lastName cannot be null");
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    private void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
     }
 
-    @Override
+    private void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public Builder cloneBuilder() {
-        Builder builder = builder();
-        super.cloneBuilder(builder);
-        return builder
-                .withFirstName(getFirstName())
-                .withLastName(getLastName());
+        return new Builder(this, super.cloneBuilder(this));
     }
 
     public static Builder builder() {
-        return new Builder();
+        return new Builder(new PrivateAccount());
     }
 
-    public static class Builder extends Account.AbstractBuilder<Builder, PrivateAccount> {
+    public static class Builder {
 
-        private String firstName;
-        private String lastName;
+        private final PrivateAccount privateAccount;
 
-        private Builder() {
+        private final Account.Builder accountBuilder;
+
+        private Builder(PrivateAccount source) {
+            this(source, new Account.Builder(source));
         }
 
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return self();
+        private Builder(PrivateAccount source, Account.Builder accountBuilder) {
+            this.privateAccount = source;
+            this.accountBuilder = accountBuilder;
         }
 
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return self();
-        }
-
-        @Override
-        public Builder self() {
+        public Builder withAccountBuilder(Consumer<Account.Builder> configure) {
+            configure.accept(accountBuilder);
             return this;
         }
 
-        @Override
+        public Builder withFirstName(String firstName) {
+            privateAccount.setFirstName(firstName);
+            return this;
+        }
+
+        public Builder withLastName(String lastName) {
+            privateAccount.setLastName(lastName);
+            return this;
+        }
+
         public PrivateAccount build() {
-            return new PrivateAccount(this);
+            return new PrivateAccount(privateAccount);
         }
     }
 

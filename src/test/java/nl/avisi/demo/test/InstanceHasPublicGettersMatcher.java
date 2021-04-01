@@ -1,6 +1,5 @@
 package nl.avisi.demo.test;
 
-import nl.avisi.demo.builder.TestBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher<TestBuilder<?>> {
+public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher<Object> {
 
     @Override
-    protected boolean matchesSafely(TestBuilder<?> source) {
-        Object instance = source.build();
+    protected boolean matchesSafely(Object instance) {
         try {
             for (Field field : getDeclaredFields(instance.getClass())) {
                 if (!hasPublicGetter(instance.getClass(), field)) {
@@ -29,8 +27,7 @@ public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher<TestBuilder
     }
 
     @Override
-    public void describeMismatchSafely(TestBuilder<?> source, Description description) {
-        Object instance = source.build();
+    public void describeMismatchSafely(Object instance, Description description) {
         getDeclaredFields(instance.getClass()).stream()
                 .filter(field -> !hasPublicGetter(instance.getClass(), field))
                 .forEach(field ->

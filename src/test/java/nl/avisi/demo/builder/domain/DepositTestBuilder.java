@@ -1,8 +1,6 @@
 package nl.avisi.demo.builder.domain;
 
-import nl.avisi.demo.builder.AbstractTestBuilder;
-
-public class DepositTestBuilder extends AbstractTestBuilder<Deposit> {
+public class DepositTestBuilder {
 
     private final Deposit.Builder builder;
 
@@ -20,7 +18,6 @@ public class DepositTestBuilder extends AbstractTestBuilder<Deposit> {
         return new DepositTestBuilder(Deposit.builder());
     }
 
-    @Override
     public Deposit build() {
         return this.builder.build();
     }

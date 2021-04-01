@@ -1,17 +1,15 @@
 package nl.avisi.demo.test;
 
-import nl.avisi.demo.builder.TestBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher<TestBuilder<?>> {
+public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher<Object> {
 
     @Override
-    protected boolean matchesSafely(TestBuilder<?> source) {
-        Object serializable = source.build();
+    protected boolean matchesSafely(Object serializable) {
         try {
             Method builderMethod = serializable.getClass().getDeclaredMethod("builder");
 
@@ -39,8 +37,8 @@ public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher<TestBui
     }
 
     @Override
-    public void describeMismatchSafely(TestBuilder<?> source, Description description) {
-        description.appendText(String.format("Class '%s' does not conform to builder pattern (a public builder() method that returns a builder with a public build() method)", source.build().getClass().getSimpleName()));
+    public void describeMismatchSafely(Object serializable, Description description) {
+        description.appendText(String.format("Class '%s' does not conform to builder pattern (a public builder() method that returns a builder with a public build() method)", serializable.getClass().getSimpleName()));
     }
 
     @Override
