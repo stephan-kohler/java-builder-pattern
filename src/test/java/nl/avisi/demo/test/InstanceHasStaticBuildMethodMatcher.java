@@ -6,7 +6,7 @@ import org.hamcrest.TypeSafeMatcher;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher<Object> {
+public class InstanceHasStaticBuildMethodMatcher extends TypeSafeMatcher {
 
     @Override
     protected boolean matchesSafely(Object serializable) {

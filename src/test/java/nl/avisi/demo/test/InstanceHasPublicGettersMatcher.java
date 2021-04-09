@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher<Object> {
+public class InstanceHasPublicGettersMatcher extends TypeSafeMatcher {
 
     @Override
     protected boolean matchesSafely(Object instance) {
         try {
             for (Field field : getDeclaredFields(instance.getClass())) {
+                // Use reflection to assert a public getter exists
                 if (!hasPublicGetter(instance.getClass(), field)) {
                     return false;
                 }

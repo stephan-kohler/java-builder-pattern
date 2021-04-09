@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher<Object> {
+public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,9 +44,9 @@ public class InstanceIsJsonSerializableMatcher extends TypeSafeMatcher<Object> {
 
     private Difference getDifference(Object instance) throws IOException {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            objectMapper.writeValue(byteArrayOutputStream, instance);
+            objectMapper.writeValue(byteArrayOutputStream, instance); // Serialize to JSON
 
-            Object target = objectMapper.readValue(byteArrayOutputStream.toByteArray(), instance.getClass());
+            Object target = objectMapper.readValue(byteArrayOutputStream.toByteArray(), instance.getClass()); // Deserialize back to an object
             ReflectionComparator reflectionComparator = ReflectionComparatorFactory.createRefectionComparator(ReflectionComparatorMode.LENIENT_ORDER);
             return reflectionComparator.getDifference(instance, target);
         }
